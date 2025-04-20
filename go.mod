@@ -1,4 +1,4 @@
-module example.com
+module userProfile
 
 go 1.24.2
 

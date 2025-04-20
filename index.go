@@ -4,8 +4,9 @@ import (
 	"log"
 	"os"
 
-	"example.com/db"
-	"example.com/models"
+	"userProfile/db"
+	"userProfile/models"
+
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
