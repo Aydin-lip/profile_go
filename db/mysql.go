@@ -10,11 +10,11 @@ import (
 )
 
 func MySqlDB() *gorm.DB {
-	dbUser := os.Getenv("DB_USERNAME")
-	dbPass := os.Getenv("DB_PASSWORD")
-	dbHost := os.Getenv("DB_HOST")
-	dbPort := os.Getenv("DB_PORT")
-	dbName := os.Getenv("DB_NAME")
+	dbUser := os.Getenv("MYSQL_DB_USERNAME")
+	dbPass := os.Getenv("MYSQL_DB_PASSWORD")
+	dbHost := os.Getenv("MYSQL_DB_HOST")
+	dbPort := os.Getenv("MYSQL_DB_PORT")
+	dbName := os.Getenv("MYSQL_DB_NAME")
 
 	if (dbUser == "") ||
 		(dbPass == "") ||

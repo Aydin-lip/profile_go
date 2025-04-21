@@ -24,7 +24,8 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	db := db.MySqlDB()
+	// db := db.MySqlDB()
+	db := db.SqlServerDB()
 	// defer db.Close()
 
 	models.SetupModels(db)
