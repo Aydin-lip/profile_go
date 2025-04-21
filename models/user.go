@@ -1,10 +1,15 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"fmt"
+	"userProfile/constant"
+
+	"gorm.io/gorm"
+)
 
 type User struct {
 	// Id uint `json:"id" gorm:"primary"`
-	Id        uint   `json:"id" gorm:"unique;not null;primaryKey"`
+	// Id        uint   `json:"id" gorm:"unique;not null;primaryKey"`
 	FirstName string `json:"first_name"`
 	LastName  string `json:"last_name"`
 	Username  string `json:"username" gorm:"unique;not null"`
@@ -13,4 +18,8 @@ type User struct {
 	Phone     string `json:"phone" gorm:"unique"`
 	Age       int    `json:"age"`
 	gorm.Model
+}
+
+func (User) TableName() string {
+	return fmt.Sprintf("%s.Users", constant.Security())
 }

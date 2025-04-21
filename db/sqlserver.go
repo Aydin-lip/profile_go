@@ -29,11 +29,21 @@ func SqlServerDB() *gorm.DB {
 	if err != nil {
 		fmt.Println(dsn)
 		fmt.Println(err)
-		panic("Failed to connect database")
+		panic("Failed to connect database (before create database)")
 	}
 
-	createDatabaseCommand := fmt.Sprintf("CREATE DATABASE %s", dbName)
-	db.Exec(createDatabaseCommand)
+	createDatabaseCommand := fmt.Sprintf("IF DB_ID('%s') IS NULL CREATE DATABASE [%s]", dbName, dbName)
+	if err := db.Exec(createDatabaseCommand).Error; err != nil {
+		fmt.Println("Error creating database:", err)
+	}
+
+	dsn = fmt.Sprintf("sqlserver://%s:%s@%s:%s?database=%s", dbUser, dbPass, dbHost, dbPort, dbName)
+	db, err = gorm.Open(sqlserver.Open(dsn), &gorm.Config{})
+	if err != nil {
+		fmt.Println(dsn)
+		fmt.Println(err)
+		panic("Failed to connect database (after create database)")
+	}
 
 	return db
 }
