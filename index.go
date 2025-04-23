@@ -4,10 +4,10 @@ import (
 	"log"
 	"os"
 
-	"userProfile/db"
-	"userProfile/models"
+	"userProfile/internal/database"
+	"userProfile/internal/models"
+	"userProfile/routes"
 
-	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
 
@@ -25,29 +25,21 @@ func main() {
 	}
 
 	// db := db.MySqlDB()
-	db := db.SqlServerDB()
+	db := database.SqlServerDB()
 	// defer db.Close()
 
 	models.SetupModels(db)
 
-	r := gin.Default()
+	// r := gin.Default()
 
-	r.GET("/", func(c *gin.Context) {
-		var users []models.User
-		if err := db.Find(&users).Error; err != nil {
-			c.JSON(500, gin.H{"error": "Failed to fetch users"})
-			return
-		}
-		c.JSON(200, gin.H{
-			"users": users,
-		})
-	})
-	// r.POST("/user", \addUserHandler)
+	// r.GET("/Security")
+	// // r.POST("/user", \addUserHandler)
+
+	r := routes.SetupRouter(db)
 
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = ":8080"
 	}
-
 	r.Run(port)
 }

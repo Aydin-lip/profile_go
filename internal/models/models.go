@@ -1,7 +1,7 @@
 package models
 
 import (
-	"userProfile/schema"
+	"userProfile/internal/schema"
 
 	"gorm.io/gorm"
 )

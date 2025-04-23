@@ -33,6 +33,14 @@ func Create(db *gorm.DB) {
 // 	return new
 // }
 
+// func TransferSchema(db *gorm.DB, from string, to string, table string) {
+// 	query := fmt.Sprintf("ALTER SCHEMA %s TRANSFER %s.%s", to, from, table)
+// 	if err := db.Exec(query).Error; err != nil {
+// 		log.Fatalf("Failed to transfer table %s from %s to %s: %v", table, from, to, err)
+// 	}
+// }
+// schema.TransferSchema(db, "Security", "Profile", "Users")
+
 func Security() string {
 	return "Security"
 }

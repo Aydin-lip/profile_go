@@ -2,9 +2,8 @@ package models
 
 import (
 	"fmt"
-	"userProfile/constant"
-
 	"gorm.io/gorm"
+	"userProfile/internal/schema"
 )
 
 type User struct {
@@ -21,5 +20,5 @@ type User struct {
 }
 
 func (User) TableName() string {
-	return fmt.Sprintf("%s.Users", constant.Security())
+	return fmt.Sprintf("%s.Users", schema.Security())
 }
