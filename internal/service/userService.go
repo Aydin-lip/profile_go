@@ -17,3 +17,12 @@ func UserService(repo *repository.UserRepositoryType) *UserServiceType {
 func (s *UserServiceType) CreateUser(user models.User) error {
 	return s.Repo.Create(user)
 }
+
+func (s *UserServiceType) LoginUser(username string) (*models.User, error) {
+	user, err := s.Repo.FindByUsername(username)
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}

@@ -44,7 +44,7 @@ func (h *UserControllerType) Register(c *gin.Context) {
 	// Generate JWT token using user.ID
 	token, err := utils.GenerateToken(user.ID)
 	if err != nil {
-		c.JSON(500, gin.H{"error": "Could not generate token"})
+		c.JSON(500, gin.H{"error": "تولید توکن ناموفق بود"})
 		return
 	}
 
@@ -52,7 +52,7 @@ func (h *UserControllerType) Register(c *gin.Context) {
 		ID:        user.ID,
 		FirstName: user.FirstName,
 		LastName:  user.LastName,
-		UserName:  user.UserName,
+		Username:  user.Username,
 		Email:     user.Email,
 		Phone:     user.Phone,
 		Age:       user.Age,
@@ -63,5 +63,54 @@ func (h *UserControllerType) Register(c *gin.Context) {
 	c.JSON(201, gin.H{
 		"user":  userResponse,
 		"token": token,
+	})
+}
+
+func (h *UserControllerType) Login(c *gin.Context) {
+	var req models.LoginRequest
+
+	// Bind JSON
+	if err := c.ShouldBindJSON(&req); err != nil {
+		validationErrors := validation.UserRegister(err)
+		c.JSON(400, gin.H{"error": validationErrors})
+		return
+	}
+
+	// Find user by username
+	user, err := h.Service.LoginUser(req.Username)
+	if err != nil {
+		c.JSON(401, gin.H{"error": "نام کاربری یا رمز عبور نامعتبر است"})
+		return
+	}
+
+	// Compare password
+	if err := utils.CheckPassword(user.Password, req.Password); err != nil {
+		c.JSON(401, gin.H{"error": "نام کاربری یا رمز عبور نامعتبر است"})
+		return
+	}
+
+	// Generate JWT
+	token, err := utils.GenerateToken(user.ID)
+	if err != nil {
+		c.JSON(500, gin.H{"error": "تولید توکن ناموفق بود"})
+		return
+	}
+
+	// Create response
+	userResponse := models.UserResponse{
+		ID:        user.ID,
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
+		Username:  user.Username,
+		Email:     user.Email,
+		Phone:     user.Phone,
+		Age:       user.Age,
+		CreatedAt: user.CreatedAt,
+	}
+
+	// Send
+	c.JSON(200, gin.H{
+		"token": token,
+		"user":  userResponse,
 	})
 }

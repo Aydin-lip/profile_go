@@ -23,7 +23,7 @@ func (r *UserRepositoryType) Create(user models.User) error {
 		errMsg := err.Error()
 
 		switch {
-		case strings.Contains(errMsg, "uni_Security_Users_user_name"):
+		case strings.Contains(errMsg, "uni_Security_Users_username"):
 			return errors.New("نام کاربری قبلاً گرفته شده است")
 		case strings.Contains(errMsg, "uni_Security_Users_email"):
 			return errors.New("ایمیل قبلا ثبت شده است")
@@ -34,4 +34,12 @@ func (r *UserRepositoryType) Create(user models.User) error {
 		return err
 	}
 	return nil
+}
+
+func (r *UserRepositoryType) FindByUsername(username string) (*models.User, error) {
+	var user models.User
+	if err := r.DB.Where("userName = ?", username).First(&user).Error; err != nil {
+		return nil, err
+	}
+	return &user, nil
 }

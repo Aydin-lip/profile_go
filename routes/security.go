@@ -8,6 +8,7 @@ import (
 	"userProfile/internal/repository"
 	"userProfile/internal/service"
 	// "userProfile/middleware"
+
 )
 
 func SecurityRoute(route *gin.RouterGroup, db *gorm.DB) {
@@ -17,5 +18,5 @@ func SecurityRoute(route *gin.RouterGroup, db *gorm.DB) {
 	userController := controller.UserController(userService)
 
 	route.POST("/Register", userController.Register)
-	// route.POST("/Login", userController.LoginUser)
+	route.POST("/Login", userController.Login)
 }
