@@ -3,18 +3,19 @@ package database
 import (
 	"fmt"
 	"log"
-	"os"
+
+	"userProfile/config"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
 func MySqlDB() *gorm.DB {
-	dbUser := os.Getenv("MYSQL_DB_USERNAME")
-	dbPass := os.Getenv("MYSQL_DB_PASSWORD")
-	dbHost := os.Getenv("MYSQL_DB_HOST")
-	dbPort := os.Getenv("MYSQL_DB_PORT")
-	dbName := os.Getenv("MYSQL_DB_NAME")
+	dbUser := config.GetEnv("MYSQL_DB_USERNAME", "")
+	dbPass := config.GetEnv("MYSQL_DB_PASSWORD", "")
+	dbHost := config.GetEnv("MYSQL_DB_HOST", "")
+	dbPort := config.GetEnv("MYSQL_DB_PORT", "")
+	dbName := config.GetEnv("MYSQL_DB_NAME", "")
 
 	if (dbUser == "") ||
 		(dbPass == "") ||

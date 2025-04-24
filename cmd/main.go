@@ -1,14 +1,10 @@
 package main
 
 import (
-	"log"
-	"os"
-
+	"userProfile/config"
 	"userProfile/internal/database"
 	"userProfile/internal/models"
 	"userProfile/routes"
-
-	"github.com/joho/godotenv"
 )
 
 type person struct {
@@ -20,26 +16,14 @@ type person struct {
 }
 
 func main() {
-	if err := godotenv.Load(); err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	config.LoadEnv()
 
-	// db := db.MySqlDB()
 	db := database.SqlServerDB()
 	// defer db.Close()
 
 	models.SetupModels(db)
 
-	// r := gin.Default()
-
-	// r.GET("/Security")
-	// // r.POST("/user", \addUserHandler)
-
 	r := routes.SetupRouter(db)
-
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = ":8080"
-	}
+	port := config.GetEnv("PORT", ":8080")
 	r.Run(port)
 }

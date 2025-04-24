@@ -3,18 +3,19 @@ package database
 import (
 	"fmt"
 	"log"
-	"os"
+
+	"userProfile/config"
 
 	"gorm.io/driver/sqlserver"
 	"gorm.io/gorm"
 )
 
 func SqlServerDB() *gorm.DB {
-	dbUser := os.Getenv("SQLSERVER_DB_USERNAME")
-	dbPass := os.Getenv("SQLSERVER_DB_PASSWORD")
-	dbHost := os.Getenv("SQLSERVER_DB_HOST")
-	dbPort := os.Getenv("SQLSERVER_DB_PORT")
-	dbName := os.Getenv("SQLSERVER_DB_NAME")
+	dbUser := config.GetEnv("SQLSERVER_DB_USERNAME", "")
+	dbPass := config.GetEnv("SQLSERVER_DB_PASSWORD", "")
+	dbHost := config.GetEnv("SQLSERVER_DB_HOST", "")
+	dbPort := config.GetEnv("SQLSERVER_DB_PORT", "")
+	dbName := config.GetEnv("SQLSERVER_DB_NAME", "")
 
 	if (dbUser == "") ||
 		(dbPass == "") ||
