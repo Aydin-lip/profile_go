@@ -2,6 +2,7 @@ package models
 
 import (
 	"fmt"
+	"time"
 
 	"gorm.io/gorm"
 
@@ -9,8 +10,6 @@ import (
 )
 
 type User struct {
-	// Id uint `json:"id" gorm:"primary"`
-	// Id        uint   `json:"id" gorm:"unique;not null;primaryKey"`
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
 	UserName  string `json:"userName" gorm:"unique;not null" binding:"required,username"`
@@ -19,6 +18,17 @@ type User struct {
 	Phone     string `json:"phone" gorm:"unique" binding:"omitempty,e164"`
 	Age       int    `json:"age"`
 	gorm.Model
+}
+
+type UserResponse struct {
+	ID        uint      `json:"id"`
+	FirstName string    `json:"firstName"`
+	LastName  string    `json:"lastName"`
+	UserName  string    `json:"userName"`
+	Email     string    `json:"email"`
+	Phone     string    `json:"phone"`
+	Age       int       `json:"age"`
+	CreatedAt time.Time `json:"createdAt"`
 }
 
 func (User) TableName() string {
