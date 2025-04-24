@@ -1,0 +1,20 @@
+# Binaries and temp files
+/tmp/
+*.exe
+*.out
+*.test
+
+# Go stuff
+bin/
+vendor/
+coverage.out
+
+# IDE/editor stuff
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS-specific
+.DS_Store
+Thumbs.db

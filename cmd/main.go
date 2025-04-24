@@ -5,6 +5,7 @@ import (
 	"userProfile/internal/database"
 	"userProfile/internal/models"
 	"userProfile/routes"
+	"userProfile/validation"
 )
 
 type person struct {
@@ -22,6 +23,7 @@ func main() {
 	// defer db.Close()
 
 	models.SetupModels(db)
+	validation.SetupCustom()
 
 	r := routes.SetupRouter(db)
 	port := config.GetEnv("PORT", ":8080")

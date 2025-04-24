@@ -2,17 +2,18 @@ package repository
 
 import (
 	"gorm.io/gorm"
+
 	"userProfile/internal/models"
 )
 
-type UserRepository struct {
+type UserRepositoryType struct {
 	DB *gorm.DB
 }
 
-func NewUserRepository(db *gorm.DB) *UserRepository {
-	return &UserRepository{DB: db}
+func UserRepository(db *gorm.DB) *UserRepositoryType {
+	return &UserRepositoryType{DB: db}
 }
 
-func (r *UserRepository) Create(user models.User) error {
+func (r *UserRepositoryType) Create(user models.User) error {
 	return r.DB.Create(&user).Error
 }
