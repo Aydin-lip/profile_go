@@ -7,7 +7,6 @@ import (
 	"userProfile/internal/service"
 	"userProfile/utils"
 	"userProfile/validation"
-
 )
 
 type UserControllerType struct {
@@ -49,9 +48,20 @@ func (h *UserControllerType) Register(c *gin.Context) {
 		return
 	}
 
+	userResponse := models.UserResponse{
+		ID:        user.ID,
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
+		UserName:  user.UserName,
+		Email:     user.Email,
+		Phone:     user.Phone,
+		Age:       user.Age,
+		CreatedAt: user.CreatedAt,
+	}
+
 	// Send
 	c.JSON(201, gin.H{
-		"token":   token,
-		"user":    user,
+		"user":  userResponse,
+		"token": token,
 	})
 }

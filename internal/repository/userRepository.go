@@ -19,18 +19,18 @@ func UserRepository(db *gorm.DB) *UserRepositoryType {
 
 func (r *UserRepositoryType) Create(user models.User) error {
 	if err := r.DB.Create(&user).Error; err != nil {
-		// Check for unique constraint error
-		if strings.Contains(err.Error(), "UNIQUE") || strings.Contains(err.Error(), "unique") {
-			if strings.Contains(err.Error(), "username") {
-				return errors.New("نام کاربری قبلاً گرفته شده است")
-			}
-			if strings.Contains(err.Error(), "email") {
-				return errors.New("ایمیل قبلا ثبت شده است")
-			}
-			if strings.Contains(err.Error(), "phone") {
-				return errors.New("شماره تلفن قبلا ثبت شده است")
-			}
+		// Look for SQL Server UNIQUE constraint errors
+		errMsg := err.Error()
+
+		switch {
+		case strings.Contains(errMsg, "uni_Security_Users_user_name"):
+			return errors.New("نام کاربری قبلاً گرفته شده است")
+		case strings.Contains(errMsg, "uni_Security_Users_email"):
+			return errors.New("ایمیل قبلا ثبت شده است")
+		case strings.Contains(errMsg, "uni_Security_Users_phone"):
+			return errors.New("شماره تلفن قبلا ثبت شده است")
 		}
+
 		return err
 	}
 	return nil
