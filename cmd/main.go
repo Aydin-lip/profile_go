@@ -4,7 +4,6 @@ import (
 	"time"
 
 	"github.com/gin-contrib/cors"
-	"github.com/gin-gonic/gin"
 
 	"userProfile/config"
 	"userProfile/internal/database"
@@ -21,9 +20,11 @@ type person struct {
 	email     string
 }
 
-func main() {
+func init() {
 	config.LoadEnv()
+}
 
+func main() {
 	db := database.SqlServerDB()
 	// defer db.Close()
 
