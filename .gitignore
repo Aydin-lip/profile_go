@@ -1,5 +1,7 @@
 # Binaries and temp files
 /tmp/
+tmp.rar
+tmp.zip
 *.exe
 *.out
 *.test

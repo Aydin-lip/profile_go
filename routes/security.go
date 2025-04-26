@@ -8,11 +8,9 @@ import (
 	"userProfile/internal/repository"
 	"userProfile/internal/service"
 	// "userProfile/middleware"
-
 )
 
 func SecurityRoute(route *gin.RouterGroup, db *gorm.DB) {
-
 	userRepo := repository.UserRepository(db)
 	userService := service.UserService(userRepo)
 	userController := controller.UserController(userService)

@@ -1,10 +1,6 @@
 package main
 
 import (
-	"time"
-
-	"github.com/gin-contrib/cors"
-
 	"userProfile/config"
 	"userProfile/internal/database"
 	"userProfile/internal/models"
@@ -32,15 +28,6 @@ func main() {
 	validation.SetupCustom()
 
 	r := routes.SetupRouter(db)
-
-	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"*"},
-		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
-		ExposeHeaders:    []string{"Content-Length"},
-		AllowCredentials: true,
-		MaxAge:           12 * time.Hour,
-	}))
 
 	port := config.GetEnv("PORT", ":8080")
 	r.Run(port)
