@@ -7,7 +7,6 @@ import (
 	"gorm.io/gorm"
 
 	"userProfile/internal/schema"
-
 )
 
 type User struct {
@@ -15,8 +14,8 @@ type User struct {
 	LastName  string `json:"lastName"`
 	Username  string `json:"username" gorm:"unique;not null" binding:"required,username"`
 	Password  string `json:"password" gorm:"not null" binding:"required,gte=8"`
-	Email     string `json:"email" gorm:"unique" binding:"omitempty,email"`
-	Phone     string `json:"phone" gorm:"unique" binding:"omitempty,e164"`
+	Email     string `json:"email" gorm:"null,unique" binding:"omitempty,email"`
+	Phone     string `json:"phone" gorm:"null,unique" binding:"omitempty,e164"`
 	Age       int    `json:"age"`
 	gorm.Model
 }
