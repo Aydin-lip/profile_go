@@ -2,6 +2,7 @@ package main
 
 import (
 	"userProfile/config"
+
 	"userProfile/internal/database"
 	"userProfile/internal/models"
 	"userProfile/routes"
@@ -22,7 +23,6 @@ func init() {
 
 func main() {
 	db := database.SqlServerDB()
-	// defer db.Close()
 
 	models.SetupModels(db)
 	validation.SetupCustom()
